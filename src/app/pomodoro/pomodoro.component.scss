@@ -1,0 +1,510 @@
+.pomodoro {
+  width: 1280px;
+  height: 800px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.ready {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  width: 830px;
+  height: 100%;
+  padding: 48px 85px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.menu {
+  width: 450px;
+  height: 100%;
+  background-color: #003164;
+}
+
+.break {
+  .main {
+    background-color: #e5f3ff;
+  }
+}
+
+.work {
+  .main {
+    background-color: #ffedf7;
+  }
+
+  .add-todo-group {
+    width: 445px;
+    height: 56px;
+    display: flex;
+  }
+
+  .add-to-do-text {
+    width: 100%;
+    border: 2px solid white;
+    font-size: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    color: #ff4384;
+    outline: #ff4384;
+    transition: all .5s;
+
+    &:focus {
+      border: 2px solid #ff4384;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #ff4384;
+      font-weight: bolder;
+      font-style: italic;
+    }
+  }
+
+  .add-to-do-button {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    background-color: #fff;
+    color: #ff4384;
+    border: 2px solid white;
+    outline: none;
+    transition: all .5s;
+
+    &:active {
+      border: 2px solid #ff4384;
+    }
+  }
+
+  .count-down-text {
+    display: flex;
+    align-items: center;
+    height: 206px;
+    font-size: 176px;
+    color: #ff4384;
+    font-weight: bold;
+  }
+
+  .more-todo {
+    display: inline-block;
+    margin-top: 8px;
+    align-self: flex-end;
+    color: #ff4384;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+
+  .count-down-group.pause {
+    border: 4px solid #FF4384;
+
+    .count-down-body {
+      border: 4px solid #FF4384;
+
+      &.count-down-body {
+        background-color: #FF4384;
+      }
+
+      i.pause {
+        color: #fff;
+      }
+
+      i.stop {
+        color: #fff;
+      }
+    }
+  }
+
+  .count-down-group.play {
+    border: 4px solid #FF4384;
+
+    .count-down-body {
+      border: 4px solid #FF4384;
+
+      &.count-down-body {
+        background-color: #fff;
+      }
+
+      i.pause {
+        color: #FF4384;
+      }
+
+      i.stop {
+        color: #FF4384;
+      }
+    }
+  }
+
+  .circle {
+    stroke: #FF4384;
+  }
+}
+
+.break {
+  .main {
+    background-color: #E5F3FF
+  }
+
+  .add-todo-group {
+    width: 445px;
+    height: 56px;
+    display: flex;
+  }
+
+  .add-to-do-text {
+    width: 100%;
+    border: 2px solid white;
+    font-size: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    color: #00A7FF;
+    outline: #00A7FF;
+    transition: all .5s;
+
+    &:focus {
+      border: 2px solid #00A7FF;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #00A7FF;
+      font-weight: bolder;
+      font-style: italic;
+    }
+  }
+
+  .add-to-do-button {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    background-color: #fff;
+    color: #00A7FF;
+    border: 2px solid white;
+    outline: none;
+    transition: all .5s;
+
+    &:active {
+      border: 2px solid #00A7FF;
+    }
+  }
+
+  .count-down-text {
+    display: flex;
+    align-items: center;
+    height: 206px;
+    font-size: 176px;
+    color: #00A7FF;
+    font-weight: bold;
+  }
+
+  .more-todo {
+    display: inline-block;
+    margin-top: 8px;
+    align-self: flex-end;
+    color: #00A7FF;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+
+  .count-down-group.pause {
+    border: 4px solid #00A7FF;
+
+    .count-down-body {
+      border: 4px solid #00A7FF;
+
+      &.count-down-body {
+        background-color: #00A7FF;
+      }
+
+      i.pause {
+        color: #fff;
+      }
+
+      i.stop {
+        color: #fff;
+      }
+    }
+  }
+
+  .count-down-group.play {
+    border: 4px solid #00A7FF;
+
+    .count-down-body {
+      border: 4px solid #00A7FF;
+
+      &.count-down-body {
+        background-color: #fff;
+      }
+
+      i.pause {
+        color: #00A7FF;
+      }
+
+      i.stop {
+        color: #00A7FF;
+      }
+    }
+  }
+
+  .circle {
+    stroke: #00A7FF;
+  }
+}
+
+.now-todo {
+  display: flex;
+  margin-top: 145px;
+  align-items: center;
+  .now-todo-checked {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #003164;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      content: '';
+      width: 40px;
+      height: 40px;
+      background-color: #003164;
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      transition: all .3s;
+    }
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+
+
+  .now-todo-info {
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .now-todo-title {
+    color: #003164;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+.now-todo-round {
+  display: flex;
+  align-items: flex-end;
+  margin-top: auto;
+
+  .done-clock {
+    width: 12px;
+    height: 12px;
+    background-color: #003164;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  .empty-clock {
+	width: 10px;
+    height: 10px;
+	border: 1px solid #ff4384;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+}
+
+.all-todo-group {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  width: 445px;
+}
+
+.all-todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    border-bottom: 1px solid rgba(#003164, .2);
+
+    span {
+      margin-left: 8px;
+      color: #003164;
+      font-weight: bold;
+    }
+
+    .do-todo {
+      margin-left: auto;
+    }
+
+    i {
+      cursor: pointer;
+    }
+  }
+}
+
+/* The container */
+.radio-group {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+
+  .menu-group {
+    margin-top: 48px;
+    margin-right: 85px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-box {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 48px;
+  }
+
+  .menu-group i {
+    color: white;
+    font-size: 36px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    &:hover {
+      color: #FF4384;
+    }
+  }
+
+  .menu-text {
+    color: white;
+    position: absolute;
+    transform: rotate(90deg);
+    transform-origin: right top;
+    right: 85px;
+    bottom: 48px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+
+.count-down-group {
+  border-radius: 50%;
+  width: 540px;
+  height: 540px;
+  position: absolute;
+  right: -65%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 100;
+  margin: 130px 0;
+  box-sizing: border-box;
+
+  .count-down-body {
+    width: 490px;
+    height: 490px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      cursor: pointer;
+    }
+
+    i.pause {
+      font-size: 96px;
+      margin-left: 32px;
+    }
+
+    i.stop {
+      margin-top: 70px;
+    }
+  }
+}
+
+.circular-chart {
+  display: block;
+  width: 532px;
+  height: 532px;
+}
+
+.circle {
+  stroke-width: 1.42;
+  stroke-linecap: butt;
+  fill: none;
+  transition: all .1s;
+  //animation: progress 1s ease-out forwards;
+  transition: stroke-dasharray .1s;
+  stroke-dasharray: 0 100;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 100 100;
+  }
+}
+
+@keyframes countdown {
+  to {
+    stroke-dasharray: 0 100;
+  }
+}
+
+// 小時中
+.small-clock {
+  width: 10px;
+  transform: rotate(-90deg);
+  border-radius: 50%;
+  border: 1px solid #ff4384;
+}
+
+.clock{
+  fill: none;
+  stroke: #ff4384;
+  stroke-width: 32;
+  transition: stroke-dasharray .1s;
+  stroke-dasharray: 0 100;
+}
+
+
+.setting {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  background-color: #003164;
+  width: 1280px;
+  height: 800px;
+  display: flex;
+  padding: 0px 85px;
+  box-sizing: border-box;
+}
+
+

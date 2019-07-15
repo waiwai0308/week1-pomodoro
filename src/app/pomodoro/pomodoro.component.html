@@ -1,0 +1,66 @@
+<div class="pomodoro" [ngClass]="countdownService.countDownStatus">
+    <div class="main">
+        <div class="add-todo-group">
+            <input class="add-to-do-text" type="text" placeholder="ADD A NEW MISSION…" #addTodoInput  (keyup.enter)="addToDoItem(addTodoInput)"/>
+            <input class="add-to-do-button" type="button" value="+" (click)="addToDoItem(addTodoInput)"/>
+        </div>
+        <div *ngIf="getNowTodoItem(todoItem).length == 0">
+            <h1>PLEASE ADD TODO TO START...</h1>
+        </div>
+        <div class="ready" *ngIf="getNowTodoItem(todoItem).length == 1">
+            <div class="now-todo" *ngFor="let item of getNowTodoItem(todoItem)">
+                <div class="now-todo-checked" (click)="finishedTodo(item.id)"></div>
+                <div class="now-todo-info">
+                    <div class="now-todo-title" @changeValue>{{item.title}}</div>
+                    <div class="now-todo-round">
+                        <div class="done-clock" *ngFor="let item of [].constructor(item.tomoto)"></div>
+                        <svg viewBox="0 0 32 32" class="small-clock" *ngIf="countdownService.countDownStatus == 'work'">
+                            <circle class="clock clock_animation" r="16" cx="16" cy="16" [ngStyle]="countdownService.isCountDown && {'stroke-dasharray': countdownService.limitPercent+',100', 'animation-name': 'countdown', 'animation-duration': countdownService.limitSeconds+'s', 'animation-fill-mode': 'forwards', 'animation-timing-function': 'linear'}"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="count-down-text">
+                <span>{{countdownService.showCountDownTime}}</span>
+            </div>
+            <div class="count-down-group" [ngClass]="{'play': countdownService.isCountDown, 'pause': !countdownService.isCountDown}">
+                <div class="count-down-body">
+                    <i *ngIf="!countdownService.isCountDown" class="material-icons pause" (click)="countdownService.startCountDown()">play_circle_filled</i>
+                    <i *ngIf="countdownService.isCountDown" class="material-icons pause" (click)="countdownService.stopCountDown()">pause_circle_filled</i>
+                    <i  class="material-icons stop" (click)="endCountDown()">stop</i>
+                </div>
+                <svg viewBox="0 0 33.15 33.15" class="circular-chart" stlye="">
+                    <path class="circle" [ngStyle]="countdownService.isCountDown && {'stroke-dasharray': countdownService.limitPercent+',100', 'animation-name': 'countdown', 'animation-duration': countdownService.limitSeconds+'s', 'animation-fill-mode': 'forwards', 'animation-timing-function': 'linear'}" d="M16.57 0.639 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                </svg>
+            </div>
+    
+            <div class="all-todo-group" *ngIf="waitTodoItemFilter(todoItem).length > 0">
+                <ul class="all-todo-list">
+                    <div *ngFor="let item of waitTodoItemFilter(todoItem);">
+                        <li>
+                            <i class="material-icons" (click)="finishedTodo(item.id)">panorama_fish_eye</i>
+                            <span>{{item.title}}</span>
+                            <i class="material-icons do-todo" (click)="setNowTodo(item.id)">play_circle_outline</i>
+                        </li>
+                    </div>
+                </ul>
+                <span class="more-todo" *ngIf="waitTodoItemFilter(todoItem).length > 3" (click)="toggleSettingComponent('1')">MORE</span>
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="menu-group">
+            <div class="menu-box">
+                <i class="material-icons" (click)="toggleSettingComponent('1')">list</i>
+            </div>
+            <div class="menu-box">
+                <i class="material-icons" (click)="toggleSettingComponent('2')">assessment</i>
+            </div>
+            <div class="menu-box">
+                <i class="material-icons" (click)="toggleSettingComponent('3')">library_music</i>
+            </div>
+        </div>
+        <span class="menu-text">POMODORO</span>
+    </div>
+    <app-setting  class="setting" @myInsertRemoveTrigger *ngIf="showSettingComponent" [parentSettingType]="settingType" (closeComponent)="toggleSettingComponent('0')"></app-setting>
+</div>

@@ -1,0 +1,149 @@
+<div class="setting-body">
+    <div class="setting-menu">
+        <div class="menu-box" [ngClass]="{'is-active': settingType === '1'}" (click)="changeSettingType('1')">
+            <i class="material-icons">list</i>
+            <span>to-do list</span>
+        </div>
+        <div class="menu-box" [ngClass]="{'is-active': settingType === '2'}" (click)="changeSettingType('2')">
+            <i class="material-icons">assessment</i>
+            <span>analytics</span>
+        </div>
+        <div class="menu-box" [ngClass]="{'is-active': settingType === '3'}" (click)="changeSettingType('3')">
+            <i class="material-icons">library_music</i>
+            <span>ringtones</span>
+        </div>
+
+        <div class="count-down-body">
+            <div class="count-down-setting">
+                <div class="count-down-setting-body">
+                    <i *ngIf="!countdownService.isCountDown" class="material-icons pause" (click)="countdownService.startCountDown()">play_circle_filled</i>
+                    <i *ngIf="countdownService.isCountDown" class="material-icons pause" (click)="countdownService.stopCountDown()">pause_circle_filled</i>
+
+                </div>
+            </div>
+            <div class="count-down-info">
+                <div class="count-down-time">{{countdownService.showCountDownTime}}</div>
+                <div class="to-do-item" *ngFor="let item of getNowTodoItem(todoItem)">{{item.title}}</div>
+            </div>
+        </div>
+    </div>
+    <!-- to-do list -->
+    <div class="to-do-list" *ngIf="settingType === '1'">
+        <div class="add-todo-group">
+            <input class="add-to-do-text" type="text" placeholder="ADD A NEW MISSION…" #addTodoInput (keyup.enter)="addToDoItem(addTodoInput)" />
+            <input class="add-to-do-button" type="button" value="+" (click)="addToDoItem(addTodoInput)" />
+        </div>
+        <div class="to-do-list-body">
+            <div class="todo-title" (click)="showWaitTodo = !showWaitTodo">
+                to-do
+                <i class="material-icons" [ngClass]="{'title-show': showWaitTodo, 'title-hide': !showWaitTodo}">arrow_drop_up</i>
+                <!-- <i class="material-icons">arrow_drop_up</i> -->
+            </div>
+            <div class="wait-todo" *ngIf="showWaitTodo" @waitTodo>
+                <div class="todo-item-list" *ngFor="let item of waitTodoFilter(todoItem)">
+                    <i class="material-icons" (click)="setfinishedTodo(item.id, true)">panorama_fish_eye</i>
+                    <div class="todo-item-title" [ngClass]="{'is-active': item.doing}">
+                        {{item.title}}
+                    </div>
+                    <i class="material-icons delete-todo" (click)="deleteTodo(item.id)">delete_outline</i>
+                    <i class="material-icons do-todo" (click)="setNowTodo(item.id)">play_circle_outline</i>
+                </div>
+            </div>
+            <div class="todo-title" (click)="showFinishedTodo = !showFinishedTodo">
+                done
+                <i class="material-icons" [ngClass]="{'title-show': showFinishedTodo, 'title-hide': !showFinishedTodo}">arrow_drop_up</i>
+                <!-- <i class="material-icons">arrow_drop_up</i> -->
+            </div>
+            <div class="finished-todo" *ngIf="showFinishedTodo" @finishedTodo>
+                <div class="todo-item-list" *ngFor="let item of doneTodoFilter(todoItem)">
+                    <i class="material-icons" (click)="setfinishedTodo(item.id, false)">check_circle_outline</i>
+                    <div class="todo-item-title done">
+                        {{item.title}}
+                    </div>
+                    <div class="tomato-body">
+                        <div class="tomoto" *ngFor="let item of [].constructor(item.tomoto)"></div>
+                        <i class="material-icons delete-todo" (click)="deleteTodo(item.id)">delete_outline</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- to-do analytics -->
+    <div class="to-do-analytics" *ngIf="settingType === '2'">
+        <div class="analytics-title">
+            focus time
+        </div>
+        <div class="focus-time-body">
+            <div class="focus-time-box today">
+                <div class="title">Today</div>
+                <div class="tomoto-body">
+                    <div class="tomoto-num">{{todoService.todayTotal}}</div>
+                    <div class="tomoto-text">/tomato</div>
+                </div>
+            </div>
+            <div class="focus-time-box week">
+                <div class="title">Week</div>
+                <div class="tomoto-body">
+                    <div class="tomoto-num">{{todoService.weekTotal}}</div>
+                    <div class="tomoto-text">/tomato</div>
+                </div>
+            </div>
+        </div>
+        <div class="analytics-title">
+            chart
+            <div class="week-date">
+                <i class="material-icons" (click)="todoService.lastWeek()">keyboard_arrow_left</i>
+                <div>{{todoService.weekRangeText}}</div>
+                <i class="material-icons" (click)="todoService.nextWeek()">keyboard_arrow_right</i>
+            </div>
+        </div>
+        <div class="chart-body">
+            <div class="graph-container">
+                <div class="ylabel">
+                    <div class="val_ylabel">24</div>
+                    <div class="val_ylabel">20</div>
+                    <div class="val_ylabel">16</div>
+                    <div class="val_ylabel">12</div>
+                    <div class="val_ylabel">8</div>
+                    <div class="val_ylabel">4</div>
+                    <div class="val_ylabel"></div>
+                </div>
+                <div class="graph">
+                    <div class="bar" [ngStyle]="{'height': (item * 10) +'px'}" *ngFor="let item of todoService.weekDateTomato">
+                        <div class="val_label">{{item}}</div>
+                    </div>
+
+                    <div class="hlabel" *ngFor="let item of todoService.weekDateText">{{item}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- to-do ringtones -->
+    <div class="to-do-analytics" *ngIf="settingType === '3'">
+        <div class="ringtones-title">
+            work
+        </div>
+        <div class="ringtones-body">
+            <div class="radio-group" *ngFor="let item of audio" (click)="countdownService.workaudio = item">
+                <i class="material-icons" *ngIf="countdownService.workaudio !== item">radio_button_unchecked</i>
+                <i class="material-icons" *ngIf="countdownService.workaudio == item">radio_button_checked</i>
+                <div class="radio-title">{{item}}</div>
+            </div>
+        </div>
+        <div class="ringtones-title">
+            break
+        </div>
+        <div class="ringtones-body">
+            <div class="radio-group" *ngFor="let item of audio" (click)="countdownService.breakaudio = item">
+                <i class="material-icons" *ngIf="countdownService.breakaudio !== item">radio_button_unchecked</i>
+                <i class="material-icons" *ngIf="countdownService.breakaudio == item">radio_button_checked</i>
+                <div class="radio-title">{{item}}</div>
+            </div>
+        </div>
+    </div>
+
+    <i class="material-icons close-button" (click)="closeSetting()">clear</i>
+    <span class="block-text">POMODORO</span>
+</div>
