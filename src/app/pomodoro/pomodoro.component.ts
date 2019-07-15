@@ -33,10 +33,10 @@ export class PomodoroComponent implements OnInit {
 
   // 資料
   todoItem = [];
-  settingType = '3';
+  settingType = '0';
 
   // 顯示設定頁
-  showSettingComponent = true;
+  showSettingComponent = false;
 
   constructor(public todoService: TodoService,public countdownService: CountdownService) {
     this.todoItem = this.todoService.getTodoData();
